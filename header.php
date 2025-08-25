@@ -134,7 +134,7 @@
                 <?php if (is_front_page()) : ?>
                     <div class="fv__catchWrap">
                         <h1 class="fv__catch">
-                            士業のHPに特化した丁寧で正確なコーディングで、<br>
+                            WordPressサイトに特化した丁寧で正確なコーディングで、<br>
                             WordPressの導入〜カスタマイズまで承ります。<br>
                             安心してご発注ください。
                         </h1>
