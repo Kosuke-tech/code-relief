@@ -1,0 +1,35 @@
+@use "mixin" as mix;
+@use "variable" as var;
+
+.headingWrap {
+    margin-bottom: 80px;
+}
+
+.heading {
+    margin-bottom: -10px;
+    text-align: center;
+    font-size: 3.5rem;
+    font-weight: 900;
+    @include mix.media_query (var.$medium) {
+        font-size: 2rem;
+    }
+}
+.subHeading {
+    text-align: center;
+    font-size: .8125rem;
+    font-weight: 900;
+    position: relative;
+    &::after {
+        content: "";
+        width: 50px;
+        height: 2px;
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--white);
+    }
+    @include mix.media_query (var.$medium) {
+        font-size: .625rem;
+    }
+}

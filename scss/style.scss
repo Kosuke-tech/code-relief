@@ -1,0 +1,1686 @@
+@charset "UTF-8";
+@use "reset";
+@use "base";
+@use "layout";
+@use "variable" as var;
+@use "mixin" as mix;
+@use "utility";
+@use "component";
+
+
+/*----------------------------------------
+        Variables
+----------------------------------------*/
+:root {
+    --black: #333333;
+    --white: #FFFFFF;
+    --main-blue: #005BAC;
+    --main-gray: #F6F6F6;
+    --sub-blue: #0066FF;
+    --orange: #FF9500;
+    --contact-blue: #82A9CB;
+    --contact-orange: #FFB247;
+}
+
+/*----------------------------------------
+    ヘッダー
+----------------------------------------*/
+
+// .header
+
+.header {
+    margin-bottom: 70px;
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__logoWrap {
+        width: 200px;
+        margin-left: 40px;
+        @include mix.media_query (var.$x-large) {
+            width: 170px;
+            margin-right: 10px;
+        }
+        @include mix.media_query (var.$large) {
+            margin-top: 15px;
+        }
+    }
+    &__logo {
+        width: 100%;
+    }
+    &__navWrap {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin-left: auto;
+        padding: 30px 20px 30px 70px;
+        border-radius: 0px 0px 0px 20px;
+        background: var(--main-blue);
+        @include mix.media_query (var.$x-large) {
+            gap: 10px;
+            padding-left: 25px;
+        }
+        @include mix.media_query (var.$large) {
+            display: none;
+        }
+    }
+    &__navList {
+        display: flex;
+        gap: 40px;
+        margin-left: auto;
+        margin-right: 20px;
+        @include mix.media_query (var.$x-large) {
+            gap: 20px;
+        }
+    }
+    &__link {
+        color: var(--white);
+        font-size: .875rem;
+        font-weight: bold;
+    }
+    &__contactWrap {
+        display: flex;
+        gap: 30px;
+        margin-right: 50px;
+        background: var(--main-blue);
+        @include mix.media_query (var.$x-large) {
+            margin-right: 0;
+            gap: 15px;
+        }
+    }
+    &__chatworkLink,
+    &__mailLink {
+        width: 200px;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        border-radius: 30px;
+        background: var(--white);
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
+        &:hover {
+            transform: scale(0.97);
+            transition: all ease .3s;
+            opacity: .8;
+            @include mix.media_query (var.$medium) {
+                transform: scale(1);
+                transition: none;
+                opacity: 1;
+            }
+        }
+        @include mix.media_query (var.$x-large) {
+            width: 175px;
+        }
+    }
+    &__chatworkIconWrap,
+    &__mailIconWrap {
+        // ロゴ中央配置のため
+        display: grid;
+    }
+    &__chatworkLogo,
+    &__mailLogo {
+        width: 100%;
+        place-content: center;
+    }
+    &__chatworkText,
+    &__mailText {
+        color: var(--black);
+        font-size: .875rem;
+        font-weight: bold;
+        @include mix.media_query (var.$x-large) {
+            font-size: .75rem;
+        }
+    }
+}
+
+/*----------------------------------------
+    スマホメニュー
+----------------------------------------*/
+
+// .spMenu
+
+.spMenu {
+    display: none;
+    @include mix.media_query (var.$large) {
+        display: block;
+    }
+    &__toggle {
+        position: absolute;
+        top: -9999999999999px;
+    }
+    &__toggle:checked ~ .spMenu__wrapper {
+        display: block;
+    }
+    &__toggle:checked ~ .spMenu__hamburger {
+        .spMenu__hamburgerLine {
+            background: transparent; //中央の横棒は透過で非表示。
+            &::before {
+                content: '';
+                top: 0;
+                transform: rotate(45deg);
+            }
+            &::after {
+                content: '';
+                top: 0;
+                transform: rotate(-45deg);
+            }
+        }
+    }
+    &__toggle:focus-visible ~ .spMenu__hamburger {
+        box-shadow: 1px 1px 2px gray;
+    }
+    &__hamburger {
+        width: 50px;
+        height: 50px;
+        border-radius: 3px;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: var(--main-blue);
+    }
+    &__hamburgerLine {
+        display: block;
+        width: 42px;
+        height: 3px;
+        background: var(--white);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%);
+        &::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            width: 100%;
+            height: 3px;
+            background: var(--white);
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            width: 100%;
+            height: 3px;
+            background: var(--white);
+        }
+    }
+    &__wrapper {
+        display: none;
+        height: calc(100vh - 65px);
+        position: absolute;
+        top: 80px;
+        left: 0;
+        z-index: 9999;
+        width: 100%;
+        padding: 25px 4%;
+        background: var(--contact-blue);
+        overflow-y: scroll;
+    }
+    &__nav {
+        margin-top: 80px;
+     }
+    &__list {
+        margin-bottom: 50px;
+    }
+    &__item {
+        width: 400px;
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: 10px;
+        text-align: center;
+        border-bottom: 1px solid var(--black);
+        @include mix.media_query (var.$x-small) {
+            width: 80%;
+            font-size: .875rem;
+        }
+    }
+    &__link {
+        display: inline-block;
+        width: 100%;
+        font-size: 1.125rem;
+        position: relative;
+        @include mix.media_query (var.$x-small) {
+            font-size: .875rem;
+        }
+    }
+    &__contactWrap {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        @include mix.media_query (var.$x-small) {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    &__chatworkLink,
+    &__mailLink {
+        width: 200px;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        border-radius: 30px;
+        background: var(--white);
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
+    }
+    &__chatworkIconWrap,
+    &__mailIconWrap {
+        // ロゴ中央配置のため
+        display: grid;
+    }
+    &__chatworkLogo,
+    &__mailLogo {
+        width: 100%;
+        place-content: center;
+    }
+    &__chatworkText,
+    &__mailText {
+        color: var(--black);
+        font-size: .875rem;
+        font-weight: bold;
+    }
+}
+
+/*----------------------------------------
+    ファーストビュー
+----------------------------------------*/
+
+// .fv
+
+.fv {
+    &__catchWrap {
+        text-align: center;
+    }
+    &__catch {
+        display: flex;
+        justify-content: center;
+        line-height: 1.2;
+        font-size: 1.75rem;
+        font-weight: 900;
+        @include mix.media_query (var.$large) {
+            font-size: 1.25rem;
+        }
+        @include mix.media_query (var.$small) {
+            font-size: 1rem;
+        }
+        @include mix.media_query (var.$x-small) {
+            font-size: .9375rem;
+        }
+    }
+    &__imgInner {
+        position: relative;
+        height: 550px;
+        @include mix.media_query (var.$small) {
+            margin-top: 20px;
+            height: 400px;
+        }
+        @include mix.media_query (var.$small) {
+            height: 350px;
+        }
+    }
+    &__wpImgWrap,
+    &__htmlImgWrap,
+    &__pcImgWrap,
+    &__cssImgWrap,
+    &__jsImgWrap {
+        // 絶対配置一括指定
+        position: absolute;
+    }
+    &__wpImgWrap {
+        width: 300px;
+        top: -2%;
+        left: 15%;
+        @include mix.media_query (var.$small) {
+            left: 10%;
+        }
+    }
+    &__htmlImgWrap {
+        width: 300px;
+        left: 15%;
+        bottom: 13%;
+        @include mix.media_query (var.$small) {
+            bottom: 20%;
+        }
+        @include mix.media_query (var.$small) {
+            left: 10%;
+            bottom: 25%;
+        }
+    }
+    &__pcImgWrap {
+        width: 450px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        @include mix.media_query (var.$small) {
+            top: 40%;
+        }
+    }
+    &__cssImgWrap {
+        width: 300px;
+        top: 3%;
+        right: 15%;
+        @include mix.media_query (var.$small) {
+            right: 10%;
+        }
+    }
+    &__jsImgWrap {
+        width: 300px;
+        right: 15%;
+        bottom: 5%;
+        @include mix.media_query (var.$x-large) {
+            bottom: 10%;
+        }
+        @include mix.media_query (var.$small) {
+            right: 10%;
+            bottom: 20%;
+        }
+        @include mix.media_query (var.$x-small) {
+            bottom: 24%;
+        }
+    }
+    &__wpImgWrap,
+    &__htmlImgWrap,
+    &__pcImgWrap,
+    &__cssImgWrap,
+    &__jsImgWrap {
+        // サイズ一括指定
+        @include mix.media_query (var.$x-large) {
+            width: 230px;
+        }
+        @include mix.media_query (var.$medium) {
+            width: 180px;
+        }
+        @include mix.media_query (var.$small) {
+            width: 150px;
+        }
+        @include mix.media_query (var.$x-small) {
+            width: 120px;
+        }
+    }
+}
+
+/*----------------------------------------
+    お見積もりボタン
+----------------------------------------*/
+
+// .estimate
+
+.estimate {
+    margin-bottom: 100px;
+    background: var(--main-blue);
+    @include mix.media_query (var.$medium) {
+        margin-bottom: 50px;
+    }
+    &__wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+        padding: 20px 0px 20px 0px;
+        @include mix.media_query (var.$large) {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+    &__textWrap {
+        background: var(--main-blue);
+    }
+    &__text {
+        font-size: 1.5rem;
+        color: var(--white);
+        @include mix.media_query (var.$large) {
+            font-size: 1.25rem;
+        }
+        @include mix.media_query (var.$x-small) {
+            font-size: .75rem;
+        }
+     }
+    &__btn {
+        padding: 15px 25px;
+        border-radius: 20px;
+        background: var(--orange);
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
+        &:hover {
+            transform: scale(0.97);
+            transition: all ease .3s;
+            opacity: .8;
+            @include mix.media_query (var.$medium) {
+                transform: scale(1);
+                transition: none;
+                opacity: 1;
+            }
+        }
+        @include mix.media_query (var.$x-small) {
+            padding: 5px 15px;
+        }
+    }
+    &__btnText {
+        font-size: 1.25rem;
+        color: var(--white);
+        @include mix.media_query (var.$large) {
+            font-size: 1rem;
+        }
+        @include mix.media_query (var.$x-small) {
+            font-size: .75rem;
+        }
+
+    }
+
+}
+
+/*----------------------------------------
+    もしこんなお悩みがあれば、
+----------------------------------------*/
+
+// .issue
+
+.issue {
+    margin-bottom: 100px;
+    @include mix.media_query (var.$medium) {
+        margin-bottom: 50px;
+    }
+    &__catchWrap {
+        margin-bottom: 100px;
+        text-align: center;
+        @include mix.media_query (var.$medium) {
+            margin-bottom: 50px;
+        }
+    }
+    &__catch {
+        display: flex;
+        justify-content: center;
+        line-height: 1.2;
+        font-size: 2.5rem;
+        font-weight: 900;
+        @include mix.media_query (var.$large) {
+            font-size: 1.5rem;
+        }
+    }
+    &__cardWrap {
+        width: 700px;
+        margin: 0 auto;
+        @include mix.media_query (var.$large) {
+            width: 650px;
+        }
+        @include mix.media_query (var.$medium) {
+            width: 500px;
+        }
+        @include mix.media_query (var.$small) {
+            width: 400px;
+        }
+        @include mix.media_query (var.$small) {
+            width: 330px;
+        }
+    }
+    &__card {
+        margin: 0 auto 40px;
+        padding: 20px 0px;
+        border-radius: 20px;
+        background: var(--main-gray);
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
+        @include mix.media_query (var.$medium) {
+            height: 95px;
+            display: flex;
+            align-items: center;
+        }
+    }
+    &__cardInner {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        gap: 20px;
+        padding-left: 30px;
+
+    }
+    &__iconWrap {
+        width: 30px;
+        height: 30px;
+        // icon中央寄せのため
+        display: grid;
+        place-content: center;
+        border-radius: 50%;
+        background: var(--orange);
+    }
+    &__icon {
+        color: var(--white);
+    }
+    &__cardText {
+        font-size: 1rem;
+        @include mix.media_query (var.$large) {
+            font-size: .875rem;
+        }
+    }
+    &__break1 {
+        @include mix.media_query (var.$medium) {
+            display: none;
+        }
+    }
+    &__break2 {
+        display: none;
+        @include mix.media_query (var.$medium) {
+            display: block;
+        }
+    }
+    &__break3 {
+        display: none;
+        @include mix.media_query (var.$x-small) {
+            display: block;
+        }
+    }
+}
+
+/*----------------------------------------
+    フリーランスならではの
+----------------------------------------*/
+
+// .answer
+
+.answer {
+    padding-top: 80px;
+    padding-bottom: 100px;
+    background: var(--main-gray);
+    @include mix.media_query (var.$medium) {
+        padding-top: 50px;
+        padding-bottom: 70px;
+    }
+    &__catchWrap {
+        margin-bottom: 50px;
+        text-align: center;
+        @include mix.media_query (var.$medium) {
+            margin-bottom: 30px;
+        }
+    }
+    &__catch {
+        display: flex;
+        justify-content: center;
+        line-height: 1.2;
+        font-size: 1.5rem;
+        font-weight: 900;
+        @include mix.media_query (var.$medium) {
+            font-size: 1.125rem;
+        }
+        @include mix.media_query (var.$x-small) {
+            font-size: .9375rem;
+        }
+    }
+    &__textWrap {
+        width: 65%;
+        margin: 0 auto;
+        @include mix.media_query (var.$x-large) {
+            width: 70%;
+        }
+        @include mix.media_query (var.$large) {
+            width: 80%;
+        }
+    }
+    &__text {
+        font-size: 1rem;
+        @include mix.media_query (var.$medium) {
+            font-size: .875rem;
+        }
+        @include mix.media_query (var.$x-large) {
+            font-size: .8125rem;
+        }
+    }
+    &__break1 {
+        display: none;
+        @include mix.media_query (var.$x-large) {
+            display: block;
+        }
+    }
+}
+
+
+/*----------------------------------------
+    Service
+----------------------------------------*/
+
+// .service
+
+.service {
+    padding-top: 30px;
+    padding-bottom: 100px;
+    background: var(--main-blue);
+    &__heading {
+        color: var(--white);
+    }
+    &__subHeading {
+        color: var(--white);
+    }
+    &__cardInner {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 70px;
+        @include mix.media_query (var.$small) {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    &__card {
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 20px;
+        background: var(--white);
+        @include mix.media_query (var.$small) {
+            width: 85%;
+        }
+    }
+    &__cardTitle {
+        margin-top: 15px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 1rem;
+        font-weight: bold;
+        @include mix.media_query (var.$large) {
+            font-size: .8125rem;
+        }
+        @include mix.media_query (var.$large) {
+            font-size: .8125rem;
+        }
+    }
+    &__imgWrap {
+        margin-bottom: 15px;
+    }
+    &__cardTextWrap {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    &__cardText {
+        font-size: .875rem;
+        @include mix.media_query (var.$large) {
+            font-size: .8125rem;
+        }
+    }
+    &__btn {
+        width: 300px;
+        display: block;
+        margin: 0 auto; // btn要素の中央寄せ
+        text-align: center; // テキストの中央寄せ
+        padding: 10px 20px;
+        border: 2px solid var(--contact-blue);
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
+        background: var(--main-gray);
+        &:hover {
+            transform: scale(0.97);
+            transition: all ease .3s;
+            opacity: .8;
+            @include mix.media_query (var.$medium) {
+                transform: scale(1);
+                transition: none;
+                opacity: 1;
+            }
+        }
+        @include mix.media_query (var.$x-small) {
+            width: 200px;
+            padding: 5px 10px;
+        }
+    }
+    &__btnText {
+        font-size: 1rem;
+        color: #6C6C6C;
+        @include mix.media_query (var.$x-small) {
+            font-size: .8125rem;
+        }
+    }
+    &__break1 {
+        display: none;
+        @include mix.media_query (var.$medium) {
+            display: block;
+        }
+        @include mix.media_query (var.$small) {
+            display: none;
+        }
+    }
+
+}
+
+
+/*----------------------------------------
+    Feature
+----------------------------------------*/
+
+// .feature
+
+.feature {
+    padding-top: 30px;
+    margin-bottom: 100px;
+    &__cardInner {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        @include mix.media_query (var.$large) {
+            display: grid;
+            grid-template-columns: 330px 330px;
+            gap: 50px;
+        }
+        @include mix.media_query (var.$medium) {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+    }
+    &__card {
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 20px;
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
+        background: var(--white);
+        @include mix.media_query (var.$x-small) {
+            width: 85%;
+        }
+    }
+    &__catchWrap {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        padding: 2px 10px;
+        border-radius: 50px;
+        background: var(--sub-blue);
+    }
+    &__catch {
+        font-size: .8125rem;
+        font-weight: bold;
+        color: var(--white);
+        @include mix.media_query (var.$x-small) {
+            font-size: .75rem;
+        }
+    }
+    &__cardWrap {
+        margin-bottom: 70px;
+    }
+    &__cardTitle {
+        margin-bottom: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+        @include mix.media_query (var.$x-large) {
+            font-size: .875rem;
+        }
+    }
+    &__imgWrap {
+        width: 90%;
+
+    }
+    &__img {
+        width: 100%;
+        object-fit: cover;
+    }
+    &__textWrap {
+        padding: 20px;
+        margin-bottom: 20px;
+
+    }
+    &__text {
+        font-size: .875rem;
+        @include mix.media_query (var.$x-large) {
+            font-size: .8125rem;
+        }
+        @include mix.media_query (var.$x-small) {
+            font-size: .75rem;
+        }
+    }
+    &__btn {
+        width: 300px;
+        display: block;
+        margin: 0 auto; // btn要素の中央寄せ
+        text-align: center; // テキストの中央寄せ
+        padding: 10px 20px;
+        border: 2px solid var(--contact-blue);
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
+        background: var(--main-gray);
+        &:hover {
+            transform: scale(0.97);
+            transition: all ease .3s;
+            opacity: .8;
+            @include mix.media_query (var.$medium) {
+                transform: scale(1);
+                transition: none;
+                opacity: 1;
+            }
+        }
+        @include mix.media_query (var.$x-small) {
+            width: 200px;
+            padding: 5px 10px;
+        }
+    }
+    &__btnText {
+        color: #6C6C6C;
+        @include mix.media_query (var.$x-small) {
+            font-size: .8125rem;
+        }
+    }
+}
+
+// page-feature.phpは、gridレイアウトを採用
+// #feature-page-layout
+
+#feature-page-layout {
+    display: grid;
+    grid-template-columns: 350px 350px 350px;
+    place-content: center;
+    @include mix.media_query (var.$x-large) {
+        display: grid;
+        grid-template-columns: 330px 330px;
+        gap: 50px;
+    }
+    @include mix.media_query (var.$medium) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+}
+
+/*----------------------------------------
+    Contact
+----------------------------------------*/
+
+// .contact
+
+.contact {
+    padding-top: 50px;
+    padding-bottom: 100px;
+    background: var(--contact-blue);
+    &__headingWrap {
+        // Contact sectionのみmargin-bottom上書き
+        margin-bottom: 100px;
+        @include mix.media_query (var.$medium) {
+            margin-bottom: 50px;
+        }
+    }
+    &__heading {
+        color: var(--white);
+    }
+    &__subHeading {
+        color: var(--white);
+        &::after {
+            // Contact sectionのみcomponentのwidthとcolorを上書き
+            width: 400px;
+            background: #80C7FF;
+            @include mix.media_query (var.$x-small) {
+            width: 250px;
+        }
+        }
+    }
+    &__catchWrap {
+        margin-bottom: 50px;
+        text-align: center;
+        line-height: 1.3;
+        @include mix.media_query (var.$medium) {
+            margin-bottom: 30px;
+        }
+    }
+    &__catch {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--white);
+        @include mix.media_query (var.$large) {
+            font-size: 1.5rem;
+        }
+        @include mix.media_query (var.$medium) {
+            font-size: 1rem;
+        }
+    }
+    &__textWrap {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    &__text {
+        font-size: 1rem;
+        color: var(--white);
+        @include mix.media_query (var.$large) {
+            font-size: .875rem;
+        }
+        @include mix.media_query (var.$large) {
+            font-size: .75rem;
+        }
+    }
+    &__btn {
+        width: 400px;
+        display: block;
+        // btnの中央寄せ
+        margin: 0 auto;
+        // テキストの中央寄せ
+        text-align: center;
+        padding: 20px 50px;
+        border-radius: 30px;
+        background: var(--contact-orange);
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
+        &:hover {
+            transform: scale(0.97);
+            transition: all ease .3s;
+            opacity: .8;
+            @include mix.media_query (var.$medium) {
+                transform: scale(1);
+                transition: none;
+                opacity: 1;
+            }
+        }
+        @include mix.media_query (var.$x-small) {
+            width: 75%;
+            padding: 10px 30px;
+        }
+    }
+    &__btnText {
+        font-size: 1rem;
+        color: #6C6C6C;
+        @include mix.media_query (var.$x-small) {
+            font-size: .8125rem;
+        }
+    }
+    &__break1 {
+        display: none;
+        @include mix.media_query (var.$medium) {
+            display: block;
+        }
+    }
+    &__break2 {
+        display: none;
+        @include mix.media_query (var.$x-small) {
+            display: block;
+        }
+    }
+    &__break3 {
+        display: block;
+        @include mix.media_query (var.$x-small) {
+            display: none;
+        }
+    }
+    &__break4 {
+        display: none;
+        @include mix.media_query (var.$x-small) {
+            display: block;
+        }
+    }
+}
+
+
+/*----------------------------------------
+    price
+----------------------------------------*/
+
+// .price
+
+.price {
+    &__descriptionWrap {
+        width: 80%; // 中央寄せのためのwidth指定
+        margin: 0 auto;
+    }
+    &__catchWrap {
+        margin-bottom: 100px;
+    }
+    &__catch {
+        text-align: center;
+    }
+    &__listInner {
+        margin-bottom: 50px;
+        &:last-child {
+            margin-bottom: 100px;
+        }
+    }
+    &__serviceNameWrap {
+        width: 80%;
+        margin: 0 auto 50px;
+        @include mix.media_query (var.$medium) {
+            width: auto;
+        }
+    }
+    &__serviceName {
+        margin-left: 30px;
+        position: relative;
+        &::before {
+            content: "";
+            width: 5px;
+            height: 30px;
+            border-radius: 5px;
+            position: absolute;
+            top: 0px;
+            left: -20px;
+            background: var(--sub-blue);
+        }
+        @include mix.media_query (var.$small) {
+            font-weight: bold;
+        }
+    }
+    &__list {
+        display: grid;
+        place-content: center;
+        grid-template-columns: 350px 350px;
+        gap: 10px;
+        @include mix.media_query (var.$x-large) {
+            grid-template-columns: 350px 130px;
+        }
+        @include mix.media_query (var.$small) {
+            grid-template-columns: 80%;
+        }
+    }
+    &__term {
+        @include mix.media_query (var.$small) {
+            font-weight: 600;
+        }
+    }
+    &__term,
+    &__unitPrice {
+        font-size: 1rem;
+        @include mix.media_query (var.$x-small) {
+            font-size: .75rem;
+        }
+    }
+    &__unitPrice {
+        @include mix.media_query (var.$small) {
+            margin-bottom: 20px;
+            text-align: end;
+            border-bottom: 1px solid var(--black);
+        }
+    }
+}
+
+/*----------------------------------------
+    flow
+----------------------------------------*/
+
+// .flow
+
+.flow {
+    &__headingWrap {
+        @include mix.media_query (var.$medium) {
+            margin-bottom: 50px; // コンポーネントのmbを上書き。
+        }
+
+    }
+    &__catchWrap {
+        margin-bottom: 50px;
+    }
+    &__catch {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        @include mix.media_query (var.$medium) {
+            font-size: 1.25rem;
+        }
+        @include mix.media_query (var.$x-small) {
+            font-size: 1rem;
+        }
+    }
+    &__card {
+        width: 60%;
+        margin: 0 auto 50px;
+        padding: 20px;
+        border: 2px solid var(--contact-blue);
+        &:last-child {
+            margin-bottom: 100px;
+        }
+        @include mix.media_query (var.$x-large) {
+            width: 70%;
+        }
+        @include mix.media_query (var.$medium) {
+            width: 80%;
+            margin-bottom: 30px;
+        }
+    }
+    &__cardTitleWrap {
+        display: flex;
+        gap: 20px;
+    }
+    &__number {
+        font-size: 3rem;
+        font-weight: bold;
+        color: var(--sub-blue);
+        @include mix.media_query (var.$medium) {
+            font-size: 2rem;
+        }
+        @include mix.media_query (var.$small) {
+            font-size: 1.25rem;
+        }
+    }
+    &__cardTitle {
+        align-self: center; //テキスト上下中央寄せ
+        font-size: 1.5rem;
+        font-weight: bold;
+        @include mix.media_query (var.$medium) {
+            font-size: 1.125rem;
+        }
+        @include mix.media_query (var.$small) {
+            font-size: 1rem;
+        }
+    }
+    &__cardText {
+        font-size: 1rem;
+        @include mix.media_query (var.$large) {
+            font-size: .8125rem;
+        }
+        @include mix.media_query (var.$small) {
+            font-size: .75rem;
+        }
+    }
+    &__break1 {
+        display: none;
+        @include mix.media_query (var.$large) {
+            display: block;
+        }
+
+    }
+}
+
+/*----------------------------------------
+    about
+----------------------------------------*/
+
+// .about
+
+.about {
+    margin-bottom: 100px;
+    &__profileWrap {
+        width: 80%; //中央寄せのためのwidth指定。
+        margin: 0 auto;
+    }
+    &__catchWrap {
+        margin-bottom: 50px;
+    }
+    &__catchWrap  {
+        text-align: center;
+    }
+    &__inner {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        @include mix.media_query (var.$small) {
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+    }
+    &__imgWrap {
+        width: 200px;
+    }
+    &__img {
+        width: 100%;
+        object-fit: cover;
+    }
+    &__profile {
+        width: 700px;
+        @include mix.media_query (var.$small) {
+            width: 92%;
+            margin: 0 auto;
+        }
+    }
+    &__nameWrap {
+        margin-bottom: 15px;
+    }
+    &__name {
+        font-size: .875rem;
+    }
+    &__description {
+        font-size: .875rem;
+    }
+    &__break1 {
+        display: none;
+        @include mix.media_query (var.$small) {
+            display: block;
+        }
+    }
+}
+
+/*----------------------------------------
+    office
+----------------------------------------*/
+
+// .office
+
+.office {
+    margin-bottom: 100px;
+    &__wrap {
+        width: 80%; // 中央寄せのためのwidth指定。
+        margin: 0 auto;
+    }
+    &__list {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: 300px 350px;
+        row-gap: 30px;
+        @include mix.media_query (var.$medium) {
+            grid-template-columns: 350px;
+            row-gap: 10px;
+        }
+    }
+    &__term,
+    &__description {
+        border-bottom: 1px solid var(--black);
+        @include mix.media_query (var.$medium) {
+            border-bottom: none; 
+            font-size: .875rem;
+        }
+        @include mix.media_query (var.$small) {
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
+    &__term {
+        padding-left: 5%;
+        align-self: flex-end;
+        @include mix.media_query (var.$medium) {
+            background: var(--main-gray);
+        }
+    }
+    &__description {
+        @include mix.media_query (var.$medium) {
+            padding-left: 10%;
+            margin-bottom: 10px; //row-gapに10px追加
+        }
+        @include mix.media_query (var.$small) {
+            padding-left: 7%;
+            font-size: .75rem;
+        }
+    }
+}
+
+
+/*----------------------------------------
+    お問い合わせフォーム
+----------------------------------------*/
+
+// contact form7で作成
+
+.pageContact {
+    &__headingWrap {
+        @include mix.media_query(var.$medium) {
+            margin-bottom: 50px;
+        }
+    }
+    &__textWrap {
+        text-align: center;
+        margin-bottom: 50px;
+        @include mix.media_query(var.$medium) {
+            margin-bottom: 30px;
+        }
+    }
+    &__text {
+        font-size: .875rem;
+        @include mix.media_query (var.$x-small) {
+            text-align: left;
+            font-size: .8125rem;
+        }
+    }
+}
+
+// .form
+
+.form {
+    margin-bottom: 100px;
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    &__itemWrap br {
+        display: none;
+    }
+    &__itemWrap > p {
+        display: grid;
+        grid-template-columns: 350px 350px;
+        align-items: center;
+        border-bottom: 1px solid var(--main_green);
+        padding-top: 20px;
+        padding-bottom: 10px;
+        @include mix.media_query(var.$medium) {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+    &__subject {
+        text-align: left;
+        font-weight: bold;
+        @include mix.media_query(var.$medium) {
+            font-size: .875rem;
+        }
+        @include mix.media_query(var.$small) {
+            margin-right: auto;
+            margin-left: 3%;
+        }
+    }
+    &__required {
+        margin-left: .5em;
+        font-size: .75rem;
+        font-weight: normal;
+        color: #3D92E6;
+    }
+    &__confirm {
+        text-align: center;
+    }
+    &__privacyLink {
+        color: #3D92E6;
+    }
+    &__submitWrap {
+        margin-top: 20px;
+        text-align: center;
+    }
+}
+
+
+// contact form7のスタイル
+
+.wpcf7-list-item-label {
+    font-size: .8125rem;
+}
+.wpcf7-select {
+    // セレクトボックス
+    width: 450px;
+    padding: 10px;
+    text-align: center;
+    @include mix.media_query (var.$large) {
+        width: 360px;
+    }
+    @include mix.media_query (var.$medium) {
+        width: 400px;
+    }
+    @include mix.media_query (var.$x-small) {
+        width: 300px;
+    }
+}
+.wpcf7-checkbox {
+    // チェックボックス
+    width: 450px;
+    @include mix.media_query (var.$large) {
+        width: 360px;
+    }
+    @include mix.media_query (var.$medium) {
+        width: 400px;
+    }
+    @include mix.media_query (var.$x-small) {
+        width: 300px;
+    }
+}
+.wpcf7-text {
+    // テキストボックス
+    width: 450px;
+    padding: 10px;
+    @include mix.media_query (var.$large) {
+        width: 360px;
+    }
+    @include mix.media_query (var.$medium) {
+        width: 400px;
+    }
+    @include mix.media_query (var.$x-small) {
+        width: 300px;
+    }
+}
+.wpcf7-textarea  {
+    // テキストエリア
+    width: 450px;
+    height: 350px;
+    @include mix.media_query (var.$large) {
+        width: 360px;
+    }
+    @include mix.media_query (var.$medium) {
+        width: 400px;
+        height: 300px;
+    }
+    @include mix.media_query (var.$x-small) {
+        width: 300px;
+        height: 250px;
+    }
+}
+.wpcf7-form-control-wrap {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+.wpcf7-acceptance {
+    margin-bottom: 20px;
+}
+.wpcf7-submit {
+    width: 350px;
+    padding: 1em 5em;
+    border: none;
+    color: var(--main-gray);
+    background: var(--contact-blue);
+    @include mix.media_query (var.$medium) {
+        width: 450px;
+    }
+    @include mix.media_query (var.$small) {
+        width: 400px;
+    }
+    @include mix.media_query (var.$x-small) {
+        width: 300px;
+    }
+}
+.wpcf7-spinner {
+    display: none; /* スピナーを非表示にする */
+}
+
+
+/*----------------------------------------
+    プライバシー・ポリシー
+----------------------------------------*/
+
+// .pb
+
+.pb {
+    margin-top: 50px;
+    &__h1,
+    &__h2 {
+        color: var(--main_blue);
+        margin-bottom: 15px;
+        border-bottom: 2px solid var(--main_blue);
+        padding-bottom: 5px;
+        text-align: left;
+    }
+    &__h1 {
+        font-size: 2.5rem;
+            @include mix.media_query (var.$medium) {
+                font-size: 2rem;
+        }
+            @include mix.media_query (var.$small) {
+                font-size: 1.5rem;
+        }
+            @include mix.media_query (var.$x-small) {
+                font-size: 1.25rem;
+        }
+    }
+    &__h2 {
+        font-size: 1.8em;
+        margin-top: 25px;
+            @include mix.media_query (var.$medium) {
+                font-size: 1.5rem;
+        }
+            @include mix.media_query (var.$small) {
+                font-size: 1rem;
+        }
+            @include mix.media_query (var.$x-small) {
+                font-size: 1rem;
+        }
+    }
+    &__p,
+    &__li,
+    &__contact-info-p {
+        font-size: 1rem;
+        @include mix.media_query (var.$medium) {
+            font-size: .875rem;
+        }
+        @include mix.media_query (var.$small) {
+            font-size: .8125rem;
+        }
+        @include mix.media_query (var.$x-small) {
+            font-size: .75rem;
+        }
+    }
+    &__p {
+        margin-bottom: 3em;
+    }
+    &__ul {
+        margin-bottom: 3em;
+        padding-left: 20px;
+    }
+    &__li {
+        margin-bottom: .5em;
+    }
+    &__strong {
+        font-weight: bold;
+    }
+    &__contact-info {
+        margin-bottom: 100px;
+    }
+    &__contact-info-p {
+        margin-bottom: .8em;
+    }
+    &__a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    &__a:hover {
+        text-decoration: underline;
+        @include mix.media_query (var.$medium) {
+            text-decoration: none;
+        }
+    }
+}
+
+
+/*----------------------------------------
+    footer
+----------------------------------------*/
+
+// .footer
+
+.footer {
+    padding-top: 50px;
+    background: var(--main-gray);
+    position: relative; // gotopボタンの配置の基準
+    &__wrap {
+        display: flex;
+        padding-bottom: 50px;
+        @include mix.media_query (var.$x-large) {
+            flex-direction: column;
+        }
+        @include mix.media_query (var.$medium) {
+            padding-bottom: 30px;
+        }
+    }
+    &__menuWrap {
+        margin-left: auto;
+        @include mix.media_query (var.$x-large) {
+            margin: 30px auto 0;
+        }
+    }
+    &__menuInner {
+        margin-bottom: 70px;
+        display: grid;
+        grid-template-columns: 250px 250px 250px;
+        @include mix.media_query (var.$medium) {
+            grid-template-columns: 300px;
+            gap: 50px;
+        }
+        @include mix.media_query (var.$x-small) {
+            grid-template-columns: 200px;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+    }
+    &__order1 {
+        @include mix.media_query (var.$medium) {
+            order: 1; // 問い合わせボタン
+        }
+    }
+    &__order2 {
+        @include mix.media_query (var.$medium) {
+            order: 2; // ホーム
+        }
+    }
+    &__order3 {
+        @include mix.media_query (var.$medium) {
+            order: 3; // サービス
+        }
+    }
+    &__subLinkWrap {
+        padding-left: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    &__mainLink {
+        font-weight: bold;
+        font-size: .875rem;
+    }
+    &__subLink {
+        font-size: .8125rem;
+    }
+    &__chatworkLink,
+    &__mailLink {
+        width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 5px 10px;
+        border-radius: 30px;
+        background: var(--white);
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
+        &:hover {
+            transform: scale(0.97);
+            transition: all ease .3s;
+            opacity: .8;
+            @include mix.media_query (var.$medium) {
+                transform: scale(1);
+                transition: none;
+                opacity: 1;
+            }
+        }
+    }
+    &__chatworkLink {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    &__goTopBtn {
+        width: 70px;
+        height: 40px;
+        position: fixed;
+        right: 10px;
+        bottom: 50px;
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
+        background: #C1D6FF;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(30px); /* ← アニメーション開始位置 */
+        transition: all 0.3s ease;
+        @include mix.media_query (var.$medium) {
+            display: none;
+        }
+    }
+    &__goTopLink {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        line-height: 1.3;
+        font-size: .625rem;
+        color: var(--white);
+    }
+    &__copyWrap {
+        text-align: center;
+    }
+    &__copy {
+        font-size: .75rem;
+        @include mix.media_query (var.$x-small) {
+            display: block;
+            line-height: 1.3;
+            font-size: .625rem;
+        }
+    }
+    &__break1 {
+        display: none;
+        @include mix.media_query (var.$x-small) {
+            display: block;
+        }
+    }
+}
+
+.footer__goTopBtn.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
