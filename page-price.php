@@ -21,7 +21,7 @@
                         <dt class="price__term">・トップページ（ヘッダー、フッター含む）</dt>
                         <dd class="price__unitPrice">20,000円(税込)~</dd>
                         <dt class="price__term">・下層ページ/1ページ</dt>
-                        <dd class="price__unitPrice">5,500円(税込)~</dd>
+                        <dd class="price__unitPrice">　5,500円(税込)~</dd>
                         <dt class="price__term">・お問い合わせフォーム</dt>
                         <dd class="price__unitPrice">15,000円(税込)~</dd>
                     </dl>
@@ -34,7 +34,7 @@
                         <dt class="price__term">・トップページ（ヘッダー、フッター含む）</dt>
                         <dd class="price__unitPrice">25,000円(税込)~</dd>
                         <dt class="price__term">・固定ページ/1ページ</dt>
-                        <dd class="price__unitPrice">65,00円(税込)~</dd>
+                        <dd class="price__unitPrice">　6,500円(税込)~</dd>
                         <dt class="price__term">・一覧ページ(ブログ一覧ページなど)</dt>
                         <dd class="price__unitPrice">15,000円(税込)~</dd>
                         <dt class="price__term">・詳細ページ</dt>
